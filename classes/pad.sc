@@ -23,9 +23,15 @@ Pad : SCUserView {
     var value;
     
     value  = pattern.tracks[trackIndex][machine.currentAttributeIndex][hitIndex];
-
-    Pen.fillColor = Color(1, 1, 1 - value).blend(Color.red, value);
     Pen.strokeColor = Color.black;
+
+    if(hitIndex % 4 == 0) {
+      Pen.width = 2;
+      Pen.fillColor = Color(0.9, 0.9, 0.9 - value).blend(Color.red, value);
+    } {
+      Pen.fillColor = Color(1, 1, 1 - value).blend(Color.red, value);      
+    };
+    
     Pen.addRect(Rect(2, 2, this.bounds.width - 4, this.bounds.height - 4));
     Pen.fillStroke;
     
@@ -41,11 +47,19 @@ Pad : SCUserView {
   }
   
   mouseDown { |x, y, mods, button, clickcount|
-    var tracks;
-    changing = true;
-    ystart   = y;
-    tracks   = machine.currentpattern.tracks;
-    valstart = tracks[trackIndex][machine.currentAttributeIndex][hitIndex];
+    var tracks   = machine.currentpattern.tracks;
+    if(clickcount == 2) {
+      var value = tracks[trackIndex][machine.currentAttributeIndex][hitIndex];
+      if(value.asFloat == 1.0) {
+        tracks[trackIndex][machine.currentAttributeIndex][hitIndex] = 0.0;
+      } {
+        tracks[trackIndex][machine.currentAttributeIndex][hitIndex] = 1.0;        
+      }
+    } {
+      changing = true;
+      ystart   = y;
+      valstart = tracks[trackIndex][machine.currentAttributeIndex][hitIndex];
+    };
     this.refresh;
   }
   

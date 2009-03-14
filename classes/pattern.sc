@@ -17,8 +17,8 @@ DrumPattern {
     DrumMachine.ntracks.do { |track|
       tracks.add([
         0.0 ! 16, // probs
-        0.5 ! 16, // amps
-        1.0 ! 16, // lpfs
+        0.7 ! 16, // amps
+        0.0 ! 16, // lpfs
       ])
     };
   }
